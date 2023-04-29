@@ -20,7 +20,7 @@ router.post('/', auth, async (req, res) => {
   );
   const affect = await trash.create();
 
-  return res.status(400).json(affect);
+  return res.status(200).json(affect);
 });
 
 /**
@@ -39,7 +39,7 @@ router.put('/', auth, async (req, res) => {
   );
   const affect = await trash.updateLocationData();
 
-  return res.status(400).json(affect);
+  return res.status(200).json(affect);
 });
 
 module.exports = router;
