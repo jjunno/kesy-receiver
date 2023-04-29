@@ -1,4 +1,5 @@
 const knex = require('../knex.js');
+const fs = require('fs');
 
 /**
  * @param {*} uuid
@@ -6,12 +7,13 @@ const knex = require('../knex.js');
  * @param {*} longitude like 24.5404323
  * @param {*} accuracy  like 8760.516262481686
  */
-function Trash(uuid, latitude, longitude, accuracy) {
+function Trash(uuid, latitude, longitude, accuracy, base64) {
   this.table = 'trashes';
   this.uuid = uuid;
   this.latitude = latitude;
   this.longitude = longitude;
   this.accuracy = accuracy;
+  this.encodedImage = base64;
 
   // Makes sure the accuracy fits the db
   if (parseInt(this.accuracy) > 9999) this.accuracy = 9999;
@@ -32,6 +34,7 @@ Trash.prototype.create = async function () {
       updatedAt: knex.fn.now(),
       createdAt: knex.fn.now(),
     });
+    this.base64ToImage(this.uuid);
     return await this.findById(row[0]);
   } catch (error) {
     console.log(error);
@@ -75,6 +78,14 @@ Trash.prototype.findById = async function (id) {
 Trash.prototype.findByUuid = async function (uuid) {
   console.log(`Select trash ${uuid}`);
   return await knex(this.table).where({ uuid: uuid }).first();
+};
+
+/**
+ * Decode base64 string to image, then save it into storage/images.
+ */
+Trash.prototype.base64ToImage = function () {
+  const buffer = Buffer.from(this.encodedImage, 'base64');
+  fs.writeFileSync(`storage/images/${this.uuid}.jpg`, buffer);
 };
 
 module.exports = Trash;

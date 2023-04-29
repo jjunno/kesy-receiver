@@ -16,7 +16,8 @@ router.post('/', auth, async (req, res) => {
     req.body.uuid,
     req.body.latitude,
     req.body.longitude,
-    req.body.accuracy
+    req.body.accuracy,
+    req.body.encodedImage
   );
   const affect = await trash.create();
 

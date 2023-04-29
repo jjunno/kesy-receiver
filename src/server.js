@@ -7,12 +7,10 @@ const nocache = require('nocache');
 const app = express();
 const port = process.env.PORT;
 
-app.use(bodyParser.json());
-
 /**
  * CORS
  */
-app.use(cors());
+app.use(bodyParser.json({ limit: '50mb' }));
 
 /**
  * CACHE
