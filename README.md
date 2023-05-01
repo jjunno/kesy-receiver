@@ -1,19 +1,22 @@
-# KESY
+# Keruusysteemi (KESY)
 
-KESY, kesy, "Keruusysteemi", "pickup system".
+Keruusysteemi, "kesy", "KESY", "pickup system".
 A personal project that consists of multiple repositories.
 
-User (me) picks up a trash with a reacher/grabber. The device takes a picture of the trash and uploads it to server along with location data and climate data.
+User (me) picks up a trash with a grabber. The collector takes a picture of the trash and uploads it to server along with location data and climate data.
 
-The device = Raspberry Pi with camera module, Sense Hat.
+The collector = Raspberry Pi with camera module, Sense Hat.
 
-# kesy-receiver
+# kesy-receiver (this)
 
-One of KESY repositories.
+.. is only one of the few KESY repositories.
 
-The repository serves a Node.js Express REST API server, which should be used by the device. It is also referred as a "master server" or "server" in other project repositories.
+The repository contains code for the server that receives the data from the collector. Please note that this server does not expose any GET methods. 
 
-This is the repository that saves the data to the master database. However, this does not have any methods or endpoints to GET data from the database.
+The data is saved to a MySQL database.
+
+The receiver might be referred as "master server" aswell.
+
 
 ### POST new Trash
 
@@ -47,7 +50,7 @@ PUT {{host}}/api/v1/trash
 }
 ```
 
-Should be accessed from the kesy-rpi1ClientAccess.
+Should be accessed from the kesy-collector Node.js.
 Updates the given UUID row location data.
 
 # Install
@@ -55,6 +58,7 @@ Updates the given UUID row location data.
 ```
 npm install
 mkdir storage/images
+touch .env
 touch src/knexfile.js
 ```
 
