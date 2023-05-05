@@ -64,6 +64,9 @@ npm install
 mkdir storage/images
 touch .env
 touch src/knexfile.js
+
+cd src
+npx knex migrate:up
 ```
 
 ## .env
