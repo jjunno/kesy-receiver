@@ -3,13 +3,13 @@
 Keruusysteemi, "kesy", "KESY", "pickup system".
 A personal project that consists of multiple repositories.
 
-User (me) picks up a trash with a grabber. The collector takes a picture of the trash and uploads it to server along with location data and climate data.
+User (me) picks up a trash with a grabber. The collector takes a picture of the trash and uploads it to server along with location data.
 
-The collector = Raspberry Pi with camera module, Sense Hat.
+The collector = Raspberry Pi with camera module.
 
 ## WORK IN PROGRESS
 
-Please note that this project is a hobby project and work in progress. For example, it is designed to be used with Sense Hat but because I still dont have one, it's using a simple button instead for now.
+Please note that this project is a hobby project and work in progress.
 
 # kesy-receiver (this)
 
@@ -68,6 +68,14 @@ cd src
 npx knex migrate:up
 ```
 
+# Self-signed certificate
+
+For HTTPS.
+
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout PATH/kesy-receiver/nginx/kesy.key -out PATH/kesy-receiver/nginx/kesy.crt
+```
+
 ## .env
 
 ```
@@ -90,7 +98,7 @@ module.exports = {
   development: {
     client: 'mysql2',
     connection: {
-      host: 'localhost',
+      host: '172.17.0.1',
       port: 3306,
       user: 'username',
       password: 'password',
@@ -112,5 +120,5 @@ module.exports = {
 
 ```
 docker build .
-docker-compose up --build --force-recreate
+docker-compose up -d --build --force-recreate
 ```
