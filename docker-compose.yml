@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Nginx.Dockerfile
+    container_name: kesy-nginx
+    depends_on:
+      - node
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx/kesy.crt:/etc/nginx/ssl/kesy.crt
+      - ./nginx/kesy.key:/etc/nginx/ssl/kesy.key
+    restart: always
+
+  node:
+    build: .
+    container_name: kesy-node
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./.env/:/usr/src/app/.env/ # Copy .env to image
+      - ./src/knexfile.js/:/usr/src/app/knexfile.js/ #
+      - ./storage/:/usr/src/app/storage/
+    logging:
+      options:
+        max-size: '5m'
+        max-file: '10'

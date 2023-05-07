@@ -8,19 +8,18 @@ User (me) picks up a trash with a grabber. The collector takes a picture of the 
 The collector = Raspberry Pi with camera module, Sense Hat.
 
 ## WORK IN PROGRESS
-Please note that this project is a hobby project and work in progress. For example, it is designed to be used with Sense Hat but because I still dont have one, it's using a simple button instead for now.
 
+Please note that this project is a hobby project and work in progress. For example, it is designed to be used with Sense Hat but because I still dont have one, it's using a simple button instead for now.
 
 # kesy-receiver (this)
 
 .. is only one of the few KESY repositories.
 
-The repository contains code for the server that receives the data from the collector. Please note that this server does not expose any GET methods. 
+The repository contains code for the server that receives the data from the collector. Please note that this server does not expose any GET methods.
 
 The data is saved to a MySQL database.
 
 The receiver might be referred as "master server" aswell.
-
 
 ### POST new Trash
 
@@ -112,5 +111,6 @@ module.exports = {
 ## Usage
 
 ```
-node src/server.js
+docker build .
+docker-compose up --build --force-recreate
 ```

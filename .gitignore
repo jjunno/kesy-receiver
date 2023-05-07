@@ -2,3 +2,6 @@
 node_modules
 src/knexfile.js
 storage/images/*
+nginx/nginx.conf
+nginx/*.crt
+nginx/*.key
